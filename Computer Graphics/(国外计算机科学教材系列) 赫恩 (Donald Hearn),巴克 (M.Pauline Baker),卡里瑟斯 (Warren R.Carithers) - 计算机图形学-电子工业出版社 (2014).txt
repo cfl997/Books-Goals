@@ -2,7 +2,17 @@ https://www.aliyundrive.com/s/d6ddjLaKYSA
 
 2023.01.09
 48
-凹凸多边形判定-向量点积 >180
+凹凸多边形判定-向量叉积 >180
 分割凹多边形-向量叉积<0 前线-旋转法 y<0
 凸多边形三角划分-舍中点
 79
+gl只对凸多边形负责
+GL_BLEND
+point
+glLineWidth
+glLineStipple
+glPolygonMode
+缝线-深度位移
+glFrontFace
+freetype
+134
