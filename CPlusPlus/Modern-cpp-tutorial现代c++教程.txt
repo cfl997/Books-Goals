@@ -218,3 +218,123 @@ add(1, 2);
 add(1.1, 2.2);
 
 
+11 函数对象包装器 std::function 是一种通用、多态的函数封装，它的实例可以对任何可以调用的目标实体进
+行存储、复制和调用操作。
+函数的容器。
+
+11 std::bind函数的意义就如字面上的意思一样，用来绑定函数调用的某些参数。
+std::bind的思想其实是一种延迟计算的思想，将可调用对象保存起来，然后在需要的时候再调用。而且这种绑定是非常灵活的，不论是普通函数还是函数对象还是成员函数都可以绑定，而且其参数可以支持占位符。
+
+这里的std::placeholders::_1是一个占位符，且绑定第一个参数，若可调用实体有2个形参，那么绑定第二个参数的占位符是std::placeholders::_2。
+
+int foo(int a, int b, int c) {
+;
+}
+int main() {
+	auto bindFoo = std::bind(foo, std::placeholders::_1, 1,2);
+	// 这时调用 bindFoo 时，只需要提供第一个参数即可
+	bindFoo(1);
+}
+
+11 右值引用 右边的值，是指表达式结束后就不再存在的临时对象。
+纯右值、将亡值。
+将亡值 (xvalue, expiring value)，是 C++11 为了引入右值引用而提出的概念。
+将亡值就定义了这样一种行为：临时的值能够被识别、同时又能够被移动。
+std::vector<int> foo() {
+	std::vector<int> temp = {1, 2, 3, 4};
+	return temp;
+}
+std::vector<int> v = foo();
+
+右值引用和左值引用
+要拿到一个将亡值，就需要用到右值引用： T &&。
+右值引用的声明让这个临时值的生命周期得以延长、只要变量还活着，那么将亡值将继续存活。
+11 提供了 std::move 这个方法将左值参数无条件的转换为右值。
+
+// int &a = std::move(1); // 不合法，非常量左引用无法引用右值
+const int &b = std::move(1); // 合法, 常量左引用允许引用右值
+
+移动语义  std::move 不会出现拷贝行为
+std::string str = "Hello world.";
+std::vector<std::string> v;
+// 将使用 push_back(const T&), 即产生拷贝行为
+v.push_back(str);
+// 将输出 "str: Hello world."
+std::cout << "str: " << str << std::endl;
+// 将使用 push_back(const T&&), 不会出现拷贝行为
+// 而整个字符串会被移动到 vector 中，所以有时候 std::move 会用来减少拷贝出现的开销
+// 这步操作后, str 中的值会变为空
+v.push_back(std::move(str));
+// 将输出 "str: "
+std::cout << "str: " << str << std::endl;
+
+
+引用坍缩规则：在传统 C++ 中，我们不能够对一个引用类型继续进行引用
+
+
+完美转发   std::forward
+就是为了让我们在传递参数的时候，保持原来
+的参数类型（左引用保持左引用，右引用保持右引用）。
+为了解决这个问题，我们应该使用 std::forward 来进行参数的转发（传递）：
+
+无论传递参数为左值还是右值，普通传参都会将参数作为左值进行转发，所以 std::move 总会接受
+到一个左值，从而转发调用了 reference(int&&) 输出右值引用。
+唯独 std::forward 即没有造成任何多余的拷贝，同时完美转发 (传递) 了函数的实参给了内部调用
+的其他函数。
+std::forward 和 std::move 一样，没有做任何事情， std::move 单纯的将左值转化为右值，
+std::forward 也只是单纯的将参数做了一个类型的转换，从现象上来看， std::forward<T>(v) 和
+static_cast<T&&>(v) 是完全一样的。
+
+
+
+11 std::array
+std::vector v;   capacity 成倍申请内存后并没有被释放。
+v.shrink_to_fit(); 返回给系统
+
+std::array<int, 4> arr = {1, 2, 3, 4};
+std::sort(arr.begin(), arr.end(), [](int a, int b) {
+	return b < a;
+});
+
+
+void foo(int *p, int len) {return;}
+std::array<int, 4> arr = {1,2,3,4};
+// C 风格接口传参
+// foo(arr, arr.size()); // 非法, 无法隐式转换
+foo(&arr[0], arr.size());
+foo(arr.data(), arr.size());
+
+
+
+
+11 std::forward_list   单向链表 0(1)复杂度插入  list 双向链表
+
+
+有序容器 std::map /std::set  红黑树  插入搜索 o(log(size)) 
+11 无序容器  Hash表  插入搜索 o(constant)
+std::unordered_map/std::unordered_multimap 
+std::unordered_set/std::unordered_multiset
+
+
+11 元组 tuple
+1. std::make_tuple: 构造元组
+2. std::get: 获得元组某个位置的值
+3. std::tie: 元组拆包
+
+auto student = std::make_tuple(3.8, ’A’, " 张三");
+std::get<0>(student);
+
+double gpa;char grade; std::string name;
+std::tie(gpa, grade, name) = student;
+
+	14  根据使用类型 获得元组中的对象
+	std::tuple<std::string, double, double, int> t("123", 4.5, 6.7, 8);
+	std::cout << std::get<std::string>(t) << std::endl;
+	std::cout << std::get<double>(t) << std::endl; // 非法, 引发编译期错误
+	std::cout << std::get<3>(t) << std::endl;
+
+
+
+
+
+
