@@ -415,6 +415,34 @@ https://regex101.com/
 https://www.regextester.com/
 
 
+.
+\.
+[a-z][A-z]
+[^0-9]			^
+window : 	\r\n\r\n
+linux:		\n\n
+\r 回车
+\n 换行
+
+\d	[0-9]
+\D	[^0-9]
+\w	[a-zA-Z0-9_]
+\W	[^a-zA-Z0-9_]
+\s	空白字符
+\S	非空白字符
+
++	匹配1+
+*	匹配0+
+？	匹配0或1
+{}	匹配多少个 {1,2}{2,4}   {3,}必须3次或以上
+*? +? {n,}? 懒惰型元字符
+
+\b	单词边界
+\B	没有单词边界
+
+()	子表达式
+
+
 
 #include <iostream>
 #include <string>
