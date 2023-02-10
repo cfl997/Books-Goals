@@ -519,3 +519,32 @@ void critical_section(int change_v) {
 	std::cout << v << std::endl;
 }
 
+11 期物（Future）表现为std::future，它提供了一个访问异步操作结果的途径
+C++11 提供的std::future 简化了这个流程，可以用来获取异步任务的结果。
+自然地，我们很容易能够想象到把它作为一种简单的线程同步手段，即屏障（barrier）。
+
+使用std::packaged_task，它可以用来封装任何可以调用的目标，从而用于实现异步的调用
+
+#include <iostream>
+#include <future>
+#include <thread>
+int main() {
+	// 将一个返回值为7 的lambda 表达式封装到task 中
+	// std::packaged_task 的模板参数为要封装函数的类型
+	std::packaged_task<int()> task([](){return 7;});
+	// 获得task 的期物
+	std::future<int> result = task.get_future(); // 在一个线程中执行task
+	std::thread(std::move(task)).detach();
+	std::cout << "waiting...";
+	result.wait(); 									// 在此设置屏障，阻塞到期物的完成
+	// 输出执行结果
+	std::cout 	<< "done!" << std:: endl << "future result is "
+				<< result.get() << std::endl;
+	return 0;
+}
+在封装好要调用的目标后，可以使用get_future() 来获得一个std::future 对象，以便之后实施
+线程同步。
+
+
+
+
