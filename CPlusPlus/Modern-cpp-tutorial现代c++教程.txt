@@ -1,4 +1,3 @@
-
 2023 01 29
 
 11 nullptr   NULL 0   
@@ -708,3 +707,109 @@ t2 -----------------x.read()------------x.read()--------x.read()----x.read()---
 0000
 
 
+
+
+11 内存顺序		6种
+
+1、宽松模型：
+在此模型下，单个线程内的原子操作都是顺序执行的，不允许指令重排，但不同线程间
+原子操作的顺序是任意的。类型通过 std::memory_order_relaxed 指定。我们来看一个例子：
+		std::atomic<int> counter = { 0 };
+		std::vector<std::thread> vt;
+		for (int i = 0; i < 100; ++i) {
+			vt.emplace_back([&]() {
+				counter.fetch_add(1, std::memory_order_relaxed);
+				});
+		}
+		for (auto& t : vt) {
+			t.join();
+		}
+		std::cout << "current counter:" << counter << std::endl;
+
+2、释放/消费模型：
+在此模型中，我们开始限制进程间的操作顺序，如果某个线程需要修改某个值，但
+另一个线程会对该值的某次操作产生依赖，即后者依赖前者。具体而言，线程 A 完成了三次对 x 的
+写操作，线程 B 仅依赖其中第三次 x 的写操作，与 x 的前两次写行为无关，则当 A 主动 x.release()
+时候（即使用 std::memory_order_release），选项 std::memory_order_consume 能够确保 B 在
+调用 x.load() 时候观察到 A 中第三次对 x 的写操作。我们来看一个例子：
+
+		// 初始化为 nullptr 防止 consumer 线程从野指针进行读取
+		std::atomic<int*> ptr(nullptr);
+		int v;
+		std::thread producer([&]() {
+			int* p = new int(42);
+			v = 1024;
+			ptr.store(p, std::memory_order_release);
+			});
+		std::thread consumer([&]() {
+			int* p;
+			while (!(p = ptr.load(std::memory_order_consume)));
+			std::cout << "p: " << *p << std::endl;
+			std::cout << "v: " << v << std::endl;
+			});
+		producer.join();
+		consumer.join();
+		
+		p:42
+		v:1024
+		
+
+3、释放/获取模型
+在此模型下，我们可以进一步加紧对不同线程间原子操作的顺序的限制，在释放
+std::memory_order_release 和获取 std::memory_order_acquire 之间规定时序，即发生在释放
+（release）操作之前的所有写操作，对其他线程的任何获取（acquire）操作都是可见的，亦即发生顺
+序（happens-before）。
+可以看到， std::memory_order_release 确保了它之前的写操作不会发生在释放操作之后，是一
+个向后的屏障（backward），而 std::memory_order_acquire 确保了它之前的写行为不会发生在
+该获取操作之后，是一个向前的屏障（forward）。对于选项 std::memory_order_acq_rel 而言，则
+结合了这两者的特点，唯一确定了一个内存屏障，使得当前线程对内存的读写不会被重排并越过此
+操作的前后：
+
+		std::vector<int> v;
+		std::atomic<int> flag = { 0 };
+		std::thread release([&]() {
+			v.push_back(42);
+			flag.store(1, std::memory_order_release);
+			});
+		std::thread acqrel([&]() {
+			int expected = 1; // must before compare_exchange_strong
+			while (!flag.compare_exchange_strong(expected, 2, std::memory_order_acq_rel))
+				expected = 1; // must after compare_exchange_strong
+				// flag has changed to 2
+			});
+		std::thread acquire([&]() {
+			while (flag.load(std::memory_order_acquire) < 2);
+			std::cout << v.at(0) << std::endl; // must be 42
+			});
+		release.join();
+		acqrel.join();
+		acquire.join();
+
+在此例中我们使用了 compare_exchange_strong 比较交换原语（Compare-and-swap primitive），
+它有一个更弱的版本，即 compare_exchange_weak，它允许即便交换成功，也仍然返回 false
+失败。其原因是因为在某些平台上虚假故障导致的，具体而言，当 CPU 进行上下文切换时，另
+一线程加载同一地址产生的不一致。除此之外， compare_exchange_strong 的性能可能稍差于
+compare_exchange_weak，但大部分情况下，鉴于其使用的复杂度而言， compare_exchange_weak
+应该被有限考虑。
+
+4、顺序一致模型
+在此模型下，原子操作满足顺序一致性，进而可能对性能产生损耗。可显式的通过
+std::memory_order_seq_cst 进行指定。
+
+		std::atomic<int> counter = { 0 };
+		std::vector<std::thread> vt;
+		for (int i = 0; i < 100; ++i) {
+			vt.emplace_back([&]() {
+				counter.fetch_add(1, std::memory_order_seq_cst);
+				});
+		}
+		for (auto& t : vt) {
+			t.join();
+		}
+		std::cout << "current counter:" << counter << std::endl;
+
+这个例子与第一个宽松模型的例子本质上没有区别，仅仅只是将原子操作的内存顺序修改为了
+memory_order_seq_cst，有兴趣的读者可以自行编写程序测量这两种不同内存顺序导致的性能差异。
+
+
+文件系统（待完善）
