@@ -813,3 +813,46 @@ memory_order_seq_cst，有兴趣的读者可以自行编写程序测量这两种
 
 
 文件系统（待完善）
+
+
+
+
+11 noexcept
+1. 函数可能抛出任何异常
+2. 函数不能抛出任何异常
+noexcept 修饰完一个函数之后能够起到封锁异常扩散的功效，如果内部产生异常，外部也不会触发。
+
+
+
+11 原始字符串字面量
+C++11 提供了原始字符串字面量的写法，可以在一个字符串前方使用 R 来修饰这个字符串，同时，
+将原始字符串使用括号包裹，例如：
+#include <iostream>
+#include <string>
+int main() {
+	std::string str = R"(C:\File\To\Path)";
+	std::cout << str << std::endl;
+	return 0;
+}
+
+
+11 自定义字面量    重载双引号后缀运算符
+// 字符串字面量自定义必须设置如下的参数列表
+std::string operator"" _wow1(const char *wow1, size_t len) {
+	return std::string(wow1)+"woooooooooow, amazing";
+}
+std::string operator"" _wow2 (unsigned long long i) {
+	return std::to_string(i)+"woooooooooow, amazing";
+}
+int main() {
+	auto str = "abc"_wow1;
+	auto num = 1_wow2;
+	std::cout << str << std::endl;
+	std::cout << num << std::endl;
+	return 0;
+}
+
+
+
+
+
