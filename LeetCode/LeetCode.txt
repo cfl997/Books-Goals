@@ -25,3 +25,4 @@ SerialNumber	Data			answer
 7				2023 03 08		* % (int)==
 28				2023 03 09		kmp
 125				2023 03 09		isAlnum tolower
+242				2023 03 13		sort(string)
