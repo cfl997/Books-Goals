@@ -13,7 +13,7 @@ SerialNumber	Data			answer
 9				2023 02 24
 4				2023 02 25
 26				2023 02 27		
-122				2023 03 06		
+122				2023 03 06		贪婪	
 189				2023 03 06
 217				2023 03 06
 136				2023 03 06		^
@@ -26,3 +26,6 @@ SerialNumber	Data			answer
 28				2023 03 09		kmp
 125				2023 03 09		isAlnum tolower
 242				2023 03 13		sort(string)
+8				2023 03 14		溢出(result>INT_MAX/10|| (result == INT_MAX/10&&(s.at(i)-'0')>INT_MAX%10))
+70				2023 03 14		动态规划
+121				2023 03 14		动态规划
