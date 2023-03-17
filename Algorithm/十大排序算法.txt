@@ -1,0 +1,17 @@
+
+
+
+https://www.bookstack.cn/read/JS-Sorting-Algorithm/3.insertionSort.md
+
+
+						Data
+1. 冒泡排序				2023 03 17
+2. 选择排序				2023 03 17
+3. 插入排序				2023 03 17
+4. 希尔排序
+5. 归并排序
+6. 快速排序
+7. 堆排序
+8. 计数排序
+9. 桶排序
+10. 基数排序
