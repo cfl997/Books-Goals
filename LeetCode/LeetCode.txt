@@ -40,3 +40,5 @@ SerialNumber	Data			answer
 38				2023 03 21		递归
 14				2023 03 21		min_element max_element
 237				2023 03 22		
+19				2023 03 23		双链表
+206				2023 03 23		reverseList
