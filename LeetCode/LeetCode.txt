@@ -42,3 +42,5 @@ SerialNumber	Data			answer
 237				2023 03 22		
 19				2023 03 23		双链表
 206				2023 03 23		reverseList
+21				2023 03 24		mergeList
+234				2023 03 24		fase & slow point
