@@ -46,3 +46,6 @@ SerialNumber	Data			answer
 234				2023 03 24		fase & slow point
 35				2023 03 26		二分
 141				2023 03 27		快慢指针 环链表
+88				2023 03 28
+278				2023 03 28		二分
+384				2023 03 28		shuffle
