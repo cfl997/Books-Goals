@@ -49,3 +49,5 @@ SerialNumber	Data			answer
 88				2023 03 28
 278				2023 03 28		二分
 384				2023 03 28		shuffle
+104				2023 03 29		tree depth
+98				2023 03 29		前中后序遍历
