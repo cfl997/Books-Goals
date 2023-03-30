@@ -51,3 +51,5 @@ SerialNumber	Data			answer
 384				2023 03 28		shuffle
 104				2023 03 29		tree depth
 98				2023 03 29		前中后序遍历
+94				2023 03 30
+101				2023 03 30		对称-左左右右，左右右左
