@@ -63,3 +63,4 @@ SerialNumber	Data			answer
 190				2023 04 07		result|= n&1
 13				2023 04 10		罗马toint
 20				2023 04 10		[{()}]
+73				2023 04 11		
