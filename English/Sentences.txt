@@ -1,9 +1,9 @@
 Sentences
+"I had listened to it firstly and then read it secondly." 2023 05 25
 
 
-
-catalog			Data(listen) 			Data(read)
-1				2023 03 
+catalog			Data(listen) 			Data(read) 
+1				2023 03 					
 2
 3
 4
