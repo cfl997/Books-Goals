@@ -17,4 +17,3 @@ Discord : cfl997#9934
 
 Welcome to exchange :)
 
-![image-20230109115551356](README.assets/image-VX.png)
