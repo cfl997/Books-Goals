@@ -79,3 +79,4 @@ SerialNumber	Data			answer
 169				2023 05 17
 1768            2023 06 07
 1071            2023 06 07      GCD  **
+1431            2023 06 08      *std::max_element
