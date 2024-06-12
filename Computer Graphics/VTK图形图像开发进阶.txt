@@ -1,0 +1,211 @@
+vtk9.3.0 build is error!
+please use :
+vtk9.2.6 build ：https://blog.csdn.net/cfl997/article/details/137046477
+
+目    录   
+
+出版说明
+序
+前言
+										data
+第1章  VTK概览							20240611
+1.1  VTK概述
+1.1.1  VTK是什么
+1.1.2  VTK能做什么
+1.1.3  如何获取VTK源码
+1.1.4  VTK学习资源
+1.2  VTK的编译安装
+1.2.1  编译VTK的准备工作
+1.2.2  编译VTK的详细步骤
+1.3  创建一个简单的VTK程序
+1.3.1  什么是CMake
+1.3.2  CMakeLists.txt脚本文件
+1.3.3  CMake的几个常用命令
+1.3.4  一个简单的VTK工程
+1.4  本章小结
+第2章  VTK的基本概念
+2.1  一个稍微复杂的VTK程序
+2.2  三维场景的基本要素
+2.2.1  灯光
+2.2.2  相机
+2.2.3  颜色
+2.2.4  纹理映射							20240612
+2.3  坐标系统及空间变换
+2.3.1  坐标系统
+2.3.2  空间变换
+2.4  VTK管线
+2.4.1  VTK渲染引擎
+2.4.2  VTK可视化管线
+2.5  VTK智能指针
+2.5.1  引用计数
+2.5.2  智能指针
+2.5.3  运行时类型识别
+2.6  本章小结
+第3章  VTK基本数据结构
+3.1  可视化数据的基本特点
+3.2  数据对象和数据集
+3.2.1  vtkDataObject
+3.2.2  vtkDataSet
+3.3  单元类型
+3.3.1  线性单元
+3.3.2  非线性单元
+3.4  属性数据
+3.4.1  标量数据
+3.4.2  矢量数据
+3.4.3  纹理坐标
+3.4.4  张量数据
+3.5  不同类型的数据集
+3.5.1  vtkImageData
+3.5.2  vtkPolyData
+3.5.3  vtkRectilinearGrid
+3.5.4  vtkStructuredGrid
+3.5.5  vtkUnstructuredGrid
+3.5.6  vtkUnstructuredPoints
+3.6  数据的存储与表达
+3.6.1  vtkDataArray
+3.6.2  数据对象的表达
+3.7  本章小结
+第4章  VTK数据的读写
+4.1  Reader与Writer类
+4.1.1  vtkImageData类型
+4.1.2  vtkPolyData类型
+4.1.3  vtkRectilinearGrid类型
+4.1.4  vtkStructuredGrid类型
+4.1.5  vtkUnstructuredGrid类型
+4.2  场景的导入与导出
+4.3  本章小结
+第5章  VTK图像处理
+5.1  VTK图像创建
+5.1.1  VTK图像数据结构
+5.1.2  VTK图像创建
+5.2  VTK图像显示
+5.2.1  vtkImageViewer2
+5.2.2  vtkImageActor
+5.2.3  图像融合
+5.3  VTK图像基本操作
+5.3.1  图像信息的访问与修改
+5.3.2  图像像素值的访问与修改
+5.3.3  图像类型转换
+5.3.4  图像颜色映射
+5.3.5  区域提取
+5.3.6  直方图统计
+5.3.7  图像重采样
+5.3.8  图像运算
+5.3.9  图像二值化
+5.4  边缘检测
+5.4.1  梯度算子
+5.4.2  Canny算子
+5.4.3  拉普拉斯算子
+5.5  图像平滑
+5.5.1  均值滤波
+5.5.2  高斯平滑
+5.5.3  中值滤波
+5.5.4  各向异性滤波
+5.6  频域处理
+5.6.1  快速傅里叶变换
+5.6.2  低通滤波
+5.6.3  高通滤波
+5.7  本章小结
+第6章  VTK图形处理
+6.1  vtkPolyData数据生成与
+显示
+6.1.1  vtkPolyData数据源
+6.1.2  vtkPolyData数据的创建
+6.1.3  vtkPolyData属性数据
+6.2  基本的图形操作
+6.2.1  法向量计算
+6.2.2  符号化Glyphing
+6.2.3  曲率计算
+6.3  网格平滑
+6.4  封闭性检测
+6.5  连通区域分析
+6.6  多分辨率处理
+6.6.1  网格抽取
+6.6.2  网格细化
+6.7  表面重建
+6.7.1  三角剖分
+6.7.2  等值面提取
+6.7.3  点云重建
+6.8  点云配准
+6.9  纹理映射
+6.10  本章小结
+第7章  体绘制
+7.1  体绘制管线
+7.2  vtkVolumeMapper
+7.2.1  vtkVolumeRayCastMapper
+7.2.2  vtkFixedPointVolumeRay
+CastMapper
+7.2.3  vtkGPUVolumeRay
+CastMapper
+7.2.4  纹理映射体绘制
+7.2.5  裁剪
+7.2.6  法向编码
+7.3  vtkVolume
+7.3.1  不透明度传输函数
+7.3.2  梯度不透明度函数
+7.3.3  颜色传输函数
+7.3.4  光照与阴影
+7.3.5  vtkLODProp3D
+7.4  不规则网格数据体绘制
+技术
+7.4.1  vtkUnstructuredGridVolume
+RayCastMapper
+7.4.2  vtkUnstructuredGridVolume
+ZSweepMapper
+7.4.3  vtkProjectedTetrahedra
+Mapper
+7.4.4  vtkHAVSVolumeMapper
+7.5  本章小结
+第8章  VTK交互与Widget
+8.1  观察者/命令模式
+8.1.1  事件回调函数
+8.1.2  vtkCommand子类
+8.2  交互器样式
+8.2.1  vtkRenderWindowInteractor
+8.2.2  vtkInteractorStyle
+8.3  VTK Widget
+8.3.1  创建Widget交互
+8.3.2  测量类Widget
+8.3.3  标注类Widget
+8.3.4  分割/配准类Widget
+8.3.5  其他Widget
+8.4  拾取
+8.4.1  点拾取
+8.4.2  单元拾取
+8.4.3  Prop拾取
+8.5  本章小结
+第9章  基于VTK的GUI应用程序
+9.1  基于Qt的VTK应用程序
+9.1.1  用CMake管理Qt工程
+9.1.2  用CMake管理Qt与
+VTK工程
+9.1.3  环境变量的加载
+9.1.4  用QVTKWidget整合
+Qt和VTK
+9.2  基于MFC的VTK应用程序
+9.2.1  基于单文档的VTK应用
+程序
+9.2.2  基于VTK的图像重采样
+程序
+9.2.3  基于对话框的VTK应用
+程序
+9.3  本章小结
+第10章  自定义VTK类
+10.1  VTK开发基础
+10.1.1  引用计数与智能指针
+10.1.2  vtkObject类分析
+10.1.3  VTK类的实现
+10.2  VTK管线机制
+10.2.1  信息对象类
+vtkInformation
+10.2.2  管线执行模型
+10.3  自定义Filter
+10.3.1  自定义Filter基本步骤
+10.3.2  Filter实例
+10.4  本章小结
+附录
+附录A  从VTK 5.0到VTK 6.0
+附录B  体绘制传输函数控件
+附录C  VTK中文的实现
+附录D  VTK在商业软件中的应用
+参考文献
