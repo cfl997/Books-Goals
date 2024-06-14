@@ -79,19 +79,19 @@ vtk9.2.6 build ：https://blog.csdn.net/cfl997/article/details/137046477
 5.1.1  VTK图像数据结构
 5.1.2  VTK图像创建
 5.2  VTK图像显示
-5.2.1  vtkImageViewer2
+5.2.1  vtkImageViewer2								窗宽colorWindow 窗位colorLevel 切片
 5.2.2  vtkImageActor
-5.2.3  图像融合
+5.2.3  图像融合										vtkImageBlend
 5.3  VTK图像基本操作
 5.3.1  图像信息的访问与修改
-5.3.2  图像像素值的访问与修改
-5.3.3  图像类型转换
-5.3.4  图像颜色映射
-5.3.5  区域提取
-5.3.6  直方图统计
-5.3.7  图像重采样
-5.3.8  图像运算
-5.3.9  图像二值化
+5.3.2  图像像素值的访问与修改							ScalarPointer
+5.3.3  图像类型转换									vtkImageCast vtkImageShiftScale
+5.3.4  图像颜色映射									vtkImageLuminance 灰度 提取组分 彩色（颜色表）vtkImageMapToColor
+5.3.5  区域提取										vtkExtractVOI 三维：vtkImageReslice 鼠标交互
+5.3.6  直方图统计										vtkImageAccumulate 灰度 彩色
+5.3.7  图像重采样										指定像素间距 重新采样 vtkImageShrink3D
+5.3.8  图像运算										数学 vtkImageMathematics 逻辑 vtkImageLogic
+5.3.9  图像二值化							20240614	vtkImageThreshold
 5.4  边缘检测
 5.4.1  梯度算子
 5.4.2  Canny算子
